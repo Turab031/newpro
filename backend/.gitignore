@@ -1,32 +1,40 @@
 # ======================
-# Dependencies
-# ======================
-node_modules/
-
-# ======================
 # Build output
 # ======================
-dist/
-.angular/
-out-tsc/
+bin/
+obj/
+publish/
 
 # ======================
-# Logs
+# Visual Studio / Rider
 # ======================
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.vs/
+*.user
+*.suo
+*.cache
+*.log
 
 # ======================
-# Environment (optional secrets)
+# EF Core (optional safe ignore)
 # ======================
-src/environments/environment.prod.ts
+Migrations/*Snapshot.cs
+Migrations/*Designer.cs
 
 # ======================
-# IDE files
+# Secrets
 # ======================
-.vscode/
-.idea/
+appsettings.Development.json
+appsettings.Production.json
+appsettings.*.json
+secrets.json
+*.env
+
+# ======================
+# Local DB files
+# ======================
+*.mdf
+*.ldf
+*.sqlite
 
 # ======================
 # OS files
@@ -35,6 +43,6 @@ src/environments/environment.prod.ts
 Thumbs.db
 
 # ======================
-# Coverage reports
+# IIS / publish leftovers
 # ======================
-coverage/
+wwwroot/
