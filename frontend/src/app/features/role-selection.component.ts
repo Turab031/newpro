@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, RouterLink],
   template: `
     <div class="selection-container">
-      <h1>Welcome to Hotel Booking System</h1>
+      <h1>Welcome to Mega Hotel Booking System</h1>
       <p>Please select your role to continue</p>
       
       <div class="cards">

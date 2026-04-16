@@ -160,3 +160,4 @@ D:\newpro\backend\HotelBooking.API\obj\Debug\net10.0\refint\HotelBooking.API.dll
 D:\newpro\backend\HotelBooking.API\obj\Debug\net10.0\HotelBooking.API.pdb
 D:\newpro\backend\HotelBooking.API\obj\Debug\net10.0\HotelBooking.API.genruntimeconfig.cache
 D:\newpro\backend\HotelBooking.API\obj\Debug\net10.0\ref\HotelBooking.API.dll
+D:\newpro\backend\HotelBooking.API\obj\Debug\net10.0\HotelBooking.API.sourcelink.json

@@ -22,7 +22,7 @@ import { Router, RouterLink } from '@angular/router';
           <div class="item"><span>Hotel:</span> <strong>{{ booking.hotelName }}</strong></div>
           <div class="item"><span>Room:</span> <strong>{{ booking.roomType }}</strong></div>
           <div class="item"><span>Dates:</span> <strong>{{ booking.checkInDate | date }} - {{ booking.checkOutDate | date }}</strong></div>
-          <div class="item"><span>Total paid:</span> <strong class="price">{{ booking.totalPrice | currency }}</strong></div>
+          <div class="item"><span>Total paid:</span> <strong class="price">₹{{ booking.totalPrice }}</strong></div>
         </div>
 
         <div class="actions">

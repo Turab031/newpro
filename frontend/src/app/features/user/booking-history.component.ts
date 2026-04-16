@@ -33,7 +33,7 @@ import { RouterLink } from '@angular/router';
             </div>
             <div class="price-box">
               <p>Total Paid</p>
-              <p class="price">{{ booking.totalPrice | currency }}</p>
+              <p class="price">₹{{ booking.totalPrice }}</p>
             </div>
           </div>
           <div class="card-footer">

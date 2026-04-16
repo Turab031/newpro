@@ -47,10 +47,18 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
             <tbody>
               <tr *ngFor="let hotel of hotels">
                 <td>{{ hotel.id }}</td>
-                <td>{{ hotel.name }}</td>
+                <td>
+                  <strong>{{ hotel.name }}</strong>
+                  <div *ngIf="hotel.roomCategories?.length">
+                    <small *ngFor="let room of hotel.roomCategories">
+                      {{room.type}} ({{room.pricePerNight}}/n) - {{room.availableRooms}}/{{room.totalRooms}} left<br>
+                    </small>
+                  </div>
+                </td>
                 <td>{{ hotel.location }}</td>
                 <td>{{ hotel.amenities }}</td>
                 <td>
+                  <button class="btn btn-primary" style="margin-right:0.5rem;" (click)="openAddRoomForm(hotel.id)">Add Room</button>
                   <button class="btn btn-danger" (click)="deleteHotel(hotel.id)">Delete</button>
                 </td>
               </tr>
@@ -58,6 +66,24 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
           </table>
         </div>
       </section>
+
+      <!-- Add Room Modal / Inline Form -->
+      <div *ngIf="selectedHotelIdForRoom" class="add-hotel-form modal-like">
+        <h3>Add Room to Hotel (ID: {{ selectedHotelIdForRoom }})</h3>
+        <form [formGroup]="roomForm" (ngSubmit)="onAddRoom()">
+          <div class="form-row">
+            <input type="text" formControlName="type" placeholder="Room Type (e.g., Deluxe)">
+            <input type="number" formControlName="pricePerNight" placeholder="Price Per Night">
+          </div>
+          <div class="form-row">
+            <input type="number" formControlName="totalRooms" placeholder="Total Rooms">
+          </div>
+          <div style="display:flex;gap:1rem;">
+            <button type="submit" [disabled]="roomForm.invalid" class="btn btn-primary">Save Room</button>
+            <button type="button" class="btn btn-secondary" (click)="selectedHotelIdForRoom = null">Cancel</button>
+          </div>
+        </form>
+      </div>
 
       <section class="bookings-list">
         <h2>All Bookings</h2>
@@ -79,7 +105,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
                 <td>{{ booking.hotelName }}</td>
                 <td>{{ booking.roomType }}</td>
                 <td>{{ booking.checkInDate | date }} - {{ booking.checkOutDate | date }}</td>
-                <td>\${{ booking.totalPrice }}</td>
+                <td>₹{{ booking.totalPrice }}</td>
                 <td><span class="status-badge">{{ booking.status }}</span></td>
               </tr>
             </tbody>
@@ -101,7 +127,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
     .btn-add { background: #28a745; color: white; }
     .btn-primary { background: #007bff; color: white; }
     .btn-danger { background: #dc3545; color: white; }
+    .btn-secondary { background: #6c757d; color: white; }
     .status-badge { background: #e8f5e9; color: #2e7d32; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: bold; }
+    .modal-like { margin-top: 1rem; border-left: 4px solid #007bff; }
   `]
 })
 export class AdminDashboardComponent implements OnInit {
@@ -118,6 +146,13 @@ export class AdminDashboardComponent implements OnInit {
     location: ['', Validators.required],
     description: ['', Validators.required],
     amenities: ['', Validators.required]
+  });
+
+  selectedHotelIdForRoom: number | null = null;
+  roomForm = this.fb.group({
+    type: ['', Validators.required],
+    pricePerNight: ['', [Validators.required, Validators.min(0)]],
+    totalRooms: ['', [Validators.required, Validators.min(1)]]
   });
 
   ngOnInit() {
@@ -142,6 +177,27 @@ export class AdminDashboardComponent implements OnInit {
   deleteHotel(id: number) {
     if (confirm('Are you sure you want to delete this hotel?')) {
       this.hotelService.deleteHotel(id).subscribe(() => this.loadData());
+    }
+  }
+
+  openAddRoomForm(hotelId: number) {
+    this.selectedHotelIdForRoom = hotelId;
+    this.roomForm.reset();
+  }
+
+  onAddRoom() {
+    if (this.roomForm.valid && this.selectedHotelIdForRoom) {
+      this.hotelService.addRoom(this.selectedHotelIdForRoom, this.roomForm.value).subscribe({
+        next: () => {
+          this.loadData();
+          this.selectedHotelIdForRoom = null;
+          this.roomForm.reset();
+        },
+        error: (err: any) => {
+          console.error(err);
+          alert('Error adding room category');
+        }
+      });
     }
   }
 }

@@ -35,7 +35,7 @@ import { RouterLink } from '@angular/router';
             <p class="description">{{ hotel.description }}</p>
             <p class="amenities">Features: {{ hotel.amenities }}</p>
             <div class="card-footer">
-              <span class="price-from">Starting from {{ getMinPrice(hotel) | currency }}</span>
+              <span class="price-from">Starting from ₹{{ getMinPrice(hotel) }}</span>
               <button class="btn btn-book" [routerLink]="['/user/details', hotel.id]">View Details</button>
             </div>
           </div>

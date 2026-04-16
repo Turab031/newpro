@@ -10,7 +10,13 @@ export class BookingService {
   private apiUrl = 'http://localhost:5148/api/bookings';
 
   createBooking(request: BookingRequest) {
-    return this.http.post<Booking>(this.apiUrl, request);
+    // Ensure dates are in ISO format that .NET can parse correctly
+    const payload = {
+      ...request,
+      checkInDate: new Date(request.checkInDate).toISOString(),
+      checkOutDate: new Date(request.checkOutDate).toISOString()
+    };
+    return this.http.post<Booking>(this.apiUrl, payload);
   }
 
   getMyBookings() {
