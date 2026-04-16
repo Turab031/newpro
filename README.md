@@ -2,7 +2,8 @@
 
 This is a modern, full-stack hotel booking application that I built to manage room reservations for both guests and administrators. 
 
-**Author:** Turab Manzoor
+**Author:** Turab Manzoor  
+**Contributors:** Members of the Mega Coders team
 
 ---
 
